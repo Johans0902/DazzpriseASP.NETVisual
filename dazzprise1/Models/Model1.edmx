@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dazzpriseModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="catalogo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="imagen" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_categoria" Type="int" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="documento" Type="varchar" MaxLength="50" />
+          <Property Name="contraseña" Type="varchar" MaxLength="200" />
+          <Property Name="telefono" Type="int" />
+          <Property Name="id_usuario" Type="int" />
+        </EntityType>
+        <EntityType Name="combo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cliente" Type="int" />
+          <Property Name="id_empleado" Type="int" />
+          <Property Name="nombre" Type="varchar" MaxLength="500" />
+          <Property Name="id_catalogo" Type="int" />
+          <Property Name="estado" Type="varchar" MaxLength="200" />
+          <Property Name="id_producto" Type="int" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="documento" Type="int" />
+          <Property Name="direccion" Type="varchar" MaxLength="50" />
+          <Property Name="telefono" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="contraseña" Type="varchar" MaxLength="200" />
+          <Property Name="id_usuario" Type="int" />
+        </EntityType>
+        <EntityType Name="pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tarjeta_credito" Type="varchar" MaxLength="100" />
+          <Property Name="numero_cuenta" Type="int" />
+          <Property Name="cvv" Type="varchar" MaxLength="100" />
+          <Property Name="fecha_expedicion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_entrega" Type="date" />
+          <Property Name="fecha_creacion" Type="date" />
+          <Property Name="fecha_pago" Type="int" />
+          <Property Name="telefono" Type="int" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="total" Type="int" />
+          <Property Name="id_pago" Type="int" />
+          <Property Name="id_cliente" Type="int" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="precio" Type="int" />
+          <Property Name="descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="marca" Type="varchar" MaxLength="50" />
+          <Property Name="modelo" Type="varchar" MaxLength="50" />
+          <Property Name="imagen" Type="text" Nullable="false" />
+          <Property Name="id_catalogo" Type="int" />
+          <Property Name="id_categoria" Type="int" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_rol" Type="varchar" MaxLength="100" />
+          <Property Name="id_empleado" Type="int" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="contraseña" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="fk_cliente_id_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_catalogo">
+          <End Role="catalogo" Type="Self.catalogo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catalogo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_empleado">
+          <End Role="empleado" Type="Self.empleado" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleado_id_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="empleado">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pedido_id_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pedido_id_pago">
+          <End Role="pago" Type="Self.pago" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_producto_id_catalogo">
+          <End Role="catalogo" Type="Self.catalogo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="producto" Type="Self.producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catalogo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="id_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_producto_id_categoria">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="producto" Type="Self.producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rol_id_empleado">
+          <End Role="empleado" Type="Self.empleado" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="rol" Type="Self.rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rol">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dazzpriseModelStoreContainer">
+          <EntitySet Name="catalogo" EntityType="Self.catalogo" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="categoria" EntityType="Self.categoria" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="combo" EntityType="Self.combo" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="pago" EntityType="Self.pago" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="producto" EntityType="Self.producto" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="rol" EntityType="Self.rol" Schema="dazzprise" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dazzprise" store:Type="Tables" />
+          <AssociationSet Name="fk_cliente_id_usuario" Association="Self.fk_cliente_id_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_catalogo" Association="Self.fk_combo_id_catalogo">
+            <End Role="catalogo" EntitySet="catalogo" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_cliente" Association="Self.fk_combo_id_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_empleado" Association="Self.fk_combo_id_empleado">
+            <End Role="empleado" EntitySet="empleado" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_producto" Association="Self.fk_combo_id_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleado_id_usuario" Association="Self.fk_empleado_id_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="empleado" EntitySet="empleado" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pedido_id_cliente" Association="Self.fk_pedido_id_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pedido_id_pago" Association="Self.fk_pedido_id_pago">
+            <End Role="pago" EntitySet="pago" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="fk_producto_id_catalogo" Association="Self.fk_producto_id_catalogo">
+            <End Role="catalogo" EntitySet="catalogo" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="fk_producto_id_categoria" Association="Self.fk_producto_id_categoria">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rol_id_empleado" Association="Self.fk_rol_id_empleado">
+            <End Role="empleado" EntitySet="empleado" />
+            <End Role="rol" EntitySet="rol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dazzpriseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="catalogo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="combo" Relationship="Self.fk_combo_id_catalogo" FromRole="catalogo" ToRole="combo" />
+          <NavigationProperty Name="producto" Relationship="Self.fk_producto_id_catalogo" FromRole="catalogo" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_categoria" Type="Int32" />
+          <NavigationProperty Name="producto" Relationship="Self.fk_producto_id_categoria" FromRole="categoria" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="Int32" />
+          <Property Name="id_usuario" Type="Int32" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_cliente_id_usuario" FromRole="cliente" ToRole="usuario" />
+          <NavigationProperty Name="combo" Relationship="Self.fk_combo_id_cliente" FromRole="cliente" ToRole="combo" />
+          <NavigationProperty Name="pedido" Relationship="Self.fk_pedido_id_cliente" FromRole="cliente" ToRole="pedido" />
+        </EntityType>
+        <EntityType Name="combo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cliente" Type="Int32" />
+          <Property Name="id_empleado" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="id_catalogo" Type="Int32" />
+          <Property Name="estado" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_producto" Type="Int32" />
+          <NavigationProperty Name="catalogo" Relationship="Self.fk_combo_id_catalogo" FromRole="combo" ToRole="catalogo" />
+          <NavigationProperty Name="cliente" Relationship="Self.fk_combo_id_cliente" FromRole="combo" ToRole="cliente" />
+          <NavigationProperty Name="empleado" Relationship="Self.fk_combo_id_empleado" FromRole="combo" ToRole="empleado" />
+          <NavigationProperty Name="producto" Relationship="Self.fk_combo_id_producto" FromRole="combo" ToRole="producto" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="Int32" />
+          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_usuario" Type="Int32" />
+          <NavigationProperty Name="combo" Relationship="Self.fk_combo_id_empleado" FromRole="empleado" ToRole="combo" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_empleado_id_usuario" FromRole="empleado" ToRole="usuario" />
+          <NavigationProperty Name="rol" Relationship="Self.fk_rol_id_empleado" FromRole="empleado" ToRole="rol" />
+        </EntityType>
+        <EntityType Name="pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tarjeta_credito" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="numero_cuenta" Type="Int32" />
+          <Property Name="cvv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_expedicion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pedido" Relationship="Self.fk_pedido_id_pago" FromRole="pago" ToRole="pedido" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_entrega" Type="DateTime" />
+          <Property Name="fecha_creacion" Type="DateTime" />
+          <Property Name="fecha_pago" Type="Int32" />
+          <Property Name="telefono" Type="Int32" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="id_pago" Type="Int32" />
+          <Property Name="id_cliente" Type="Int32" />
+          <NavigationProperty Name="cliente" Relationship="Self.fk_pedido_id_cliente" FromRole="pedido" ToRole="cliente" />
+          <NavigationProperty Name="pago" Relationship="Self.fk_pedido_id_pago" FromRole="pedido" ToRole="pago" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="precio" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_catalogo" Type="Int32" />
+          <Property Name="id_categoria" Type="Int32" />
+          <NavigationProperty Name="catalogo" Relationship="Self.fk_producto_id_catalogo" FromRole="producto" ToRole="catalogo" />
+          <NavigationProperty Name="categoria" Relationship="Self.fk_producto_id_categoria" FromRole="producto" ToRole="categoria" />
+          <NavigationProperty Name="combo" Relationship="Self.fk_combo_id_producto" FromRole="producto" ToRole="combo" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_rol" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id_empleado" Type="Int32" />
+          <NavigationProperty Name="empleado" Relationship="Self.fk_rol_id_empleado" FromRole="rol" ToRole="empleado" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cliente" Relationship="Self.fk_cliente_id_usuario" FromRole="usuario" ToRole="cliente" />
+          <NavigationProperty Name="empleado" Relationship="Self.fk_empleado_id_usuario" FromRole="usuario" ToRole="empleado" />
+        </EntityType>
+        <Association Name="fk_combo_id_catalogo">
+          <End Role="catalogo" Type="Self.catalogo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catalogo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_producto_id_catalogo">
+          <End Role="catalogo" Type="Self.catalogo" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="producto" Type="Self.producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catalogo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="id_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_producto_id_categoria">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="producto" Type="Self.producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cliente_id_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pedido_id_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_empleado">
+          <End Role="empleado" Type="Self.empleado" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_combo_id_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="combo" Type="Self.combo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="combo">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleado_id_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="empleado" Type="Self.empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="empleado">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rol_id_empleado">
+          <End Role="empleado" Type="Self.empleado" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="rol" Type="Self.rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rol">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pedido_id_pago">
+          <End Role="pago" Type="Self.pago" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dazzpriseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="catalogo" EntityType="Self.catalogo" />
+          <EntitySet Name="categoria" EntityType="Self.categoria" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" />
+          <EntitySet Name="combo" EntityType="Self.combo" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" />
+          <EntitySet Name="pago" EntityType="Self.pago" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" />
+          <EntitySet Name="producto" EntityType="Self.producto" />
+          <EntitySet Name="rol" EntityType="Self.rol" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="fk_combo_id_catalogo" Association="Self.fk_combo_id_catalogo">
+            <End Role="catalogo" EntitySet="catalogo" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_producto_id_catalogo" Association="Self.fk_producto_id_catalogo">
+            <End Role="catalogo" EntitySet="catalogo" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="fk_producto_id_categoria" Association="Self.fk_producto_id_categoria">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cliente_id_usuario" Association="Self.fk_cliente_id_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_cliente" Association="Self.fk_combo_id_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pedido_id_cliente" Association="Self.fk_pedido_id_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_empleado" Association="Self.fk_combo_id_empleado">
+            <End Role="empleado" EntitySet="empleado" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_combo_id_producto" Association="Self.fk_combo_id_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="combo" EntitySet="combo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleado_id_usuario" Association="Self.fk_empleado_id_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="empleado" EntitySet="empleado" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rol_id_empleado" Association="Self.fk_rol_id_empleado">
+            <End Role="empleado" EntitySet="empleado" />
+            <End Role="rol" EntitySet="rol" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pedido_id_pago" Association="Self.fk_pedido_id_pago">
+            <End Role="pago" EntitySet="pago" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dazzpriseModelStoreContainer" CdmEntityContainer="dazzpriseEntities1">
+          <EntitySetMapping Name="catalogo">
+            <EntityTypeMapping TypeName="dazzpriseModel.catalogo">
+              <MappingFragment StoreEntitySet="catalogo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoria">
+            <EntityTypeMapping TypeName="dazzpriseModel.categoria">
+              <MappingFragment StoreEntitySet="categoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre_categoria" ColumnName="nombre_categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="dazzpriseModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="combo">
+            <EntityTypeMapping TypeName="dazzpriseModel.combo">
+              <MappingFragment StoreEntitySet="combo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_catalogo" ColumnName="id_catalogo" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleado">
+            <EntityTypeMapping TypeName="dazzpriseModel.empleado">
+              <MappingFragment StoreEntitySet="empleado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pago">
+            <EntityTypeMapping TypeName="dazzpriseModel.pago">
+              <MappingFragment StoreEntitySet="pago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tarjeta_credito" ColumnName="tarjeta_credito" />
+                <ScalarProperty Name="numero_cuenta" ColumnName="numero_cuenta" />
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+                <ScalarProperty Name="fecha_expedicion" ColumnName="fecha_expedicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pedido">
+            <EntityTypeMapping TypeName="dazzpriseModel.pedido">
+              <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fecha_entrega" ColumnName="fecha_entrega" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="fecha_pago" ColumnName="fecha_pago" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="id_pago" ColumnName="id_pago" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="dazzpriseModel.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="marca" ColumnName="marca" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="id_catalogo" ColumnName="id_catalogo" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol">
+            <EntityTypeMapping TypeName="dazzpriseModel.rol">
+              <MappingFragment StoreEntitySet="rol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre_rol" ColumnName="nombre_rol" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="dazzpriseModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+{ }
+    <body background="https://kangwon.ac.kr/DATA/cmmAtchmnfl/tn_idea_propse/20190319/201903191711095061I9.jpg">
+
+    </body>
+
+<table>
+    <tr align="left">
+        <td>
+
+
+            <img src="~/Content/images/Logo DAZZPRISE1.png" style="width:350px; height:auto;" />
+
+        </td>
+    </tr>
+</table>
+
+
+@{ if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div class="alert alert-warning">@ViewBag.Message</div>
+    }
+}
+<head>
+
+    <link type="text/css" href="~/Content/Site.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h2>Iniciar Sesión</h2>
+
+    <div class="form-horizontal">
+        <form action="/Usuario/Login" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label class="control-label col-md-2">Usuario</label>
+                <div class="col-md-10">
+                    <input type="text" name="user" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Password</label>
+                <div class="col-md-10">
+                    <input type="password" name="password" value="" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" name="" value="Ingresar" class="btn btn-default" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+<div>
+    @Html.ActionLink("Registrarse", "Create", "Cliente")
+
+
+</div>
+<link rel="stylesheet" href="~/Content/Custom.css">

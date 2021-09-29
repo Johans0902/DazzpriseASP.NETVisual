@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="28c1d43465a14039a0e313a136b42d94" Name="Diagram1">
+        <EntityTypeShape EntityType="dazzpriseModel.catalogo" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.categoria" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.cliente" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.combo" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.empleado" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.pago" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.pedido" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.producto" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.rol" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dazzpriseModel.usuario" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="dazzpriseModel.fk_combo_id_catalogo" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_producto_id_catalogo" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_producto_id_categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_cliente_id_usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_combo_id_cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_pedido_id_cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_combo_id_empleado" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_combo_id_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_empleado_id_usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_rol_id_empleado" ManuallyRouted="false" />
+        <AssociationConnector Association="dazzpriseModel.fk_pedido_id_pago" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
