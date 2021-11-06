@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace dazzprise1.Controllers
 {
-    public class UsuarioController : Controller
+    public class ProductoController : Controller
     {
-        // GET: Usuario
+        // GET: Producto
         [Authorize]
         public ActionResult Index()
         {
             using (var db = new dazzpriseEntities1())
             {
-                return View(db.usuario.ToList());
+                return View(db.producto.ToList());
             }
         }
 
@@ -30,7 +30,7 @@ namespace dazzprise1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Create(usuario usuario)
+        public ActionResult Create(producto producto)
         {
             if (!ModelState.IsValid)
                 return View();
@@ -41,11 +41,11 @@ namespace dazzprise1.Controllers
                 using (var db = new dazzpriseEntities1())
                 {
 
-                    usuario.contraseña = UsuarioController.HashSHA1(usuario.contraseña);
-                    db.usuario.Add(usuario);
+                    producto.nombre = UsuarioController.HashSHA1(producto.nombre);
+                    db.producto.Add(producto);
                     _ = db.SaveChanges();
                     return RedirectToAction("index");
-                    
+
                 }
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace dazzprise1.Controllers
         {
             using (var db = new dazzpriseEntities1())
             {
-                var findUser = db.usuario.Find(id);
+                var findUser = db.producto.Find(id);
                 return View(findUser);
             }
         }
@@ -105,8 +105,8 @@ namespace dazzprise1.Controllers
             {
                 using (var db = new dazzpriseEntities1())
                 {
-                    var findUser = db.usuario.Find(id);
-                    db.usuario.Remove(findUser);
+                    var findUser = db.producto.Find(id);
+                    db.producto.Remove(findUser);
                     db.SaveChanges();
                     return RedirectToAction("index");
                 }
@@ -124,22 +124,25 @@ namespace dazzprise1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(usuario editUser)
+        public ActionResult Edit(producto editUser)
         {
             try
             {
                 using (var db = new dazzpriseEntities1())
                 {
-                    usuario user = db.usuario.Find(editUser.id);
+                    producto user = db.producto.Find(editUser.id);
 
-                    user.email = editUser.email;
-                    user.contraseña = editUser.contraseña;
+                    user.id = editUser.id;
+                    user.nombre = editUser.nombre;
+                    user.descripcion = editUser.descripcion;
+                    user.precio = editUser.precio;
+                    user.marca = editUser.marca;
+                    user.modelo = editUser.modelo;
+                    user.imagen = editUser.imagen;
+                    
 
-                
 
-
-
-                db.SaveChanges();
+                    db.SaveChanges();
                     return RedirectToAction("index");
                 }
             }
@@ -156,32 +159,6 @@ namespace dazzprise1.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(string user, string password)
-        {
-            string passEncrip = UsuarioController.HashSHA1(password);
-            using (var db = new dazzpriseEntities1())
-            {
-                var userLogin = db.usuario.FirstOrDefault(e => e.email == user && e.contraseña == passEncrip);
-                if (userLogin != null)
-                {
-                    FormsAuthentication.SetAuthCookie(userLogin.email, true);
-                    Session["User"] = userLogin;
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    return Login("Verifique sus datos");
-                }
-            }
-        }
-        [Authorize]
-
-        public ActionResult CloseSession()
-        {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
-        }
     }
+
 }
