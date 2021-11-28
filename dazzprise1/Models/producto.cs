@@ -34,5 +34,11 @@ namespace dazzprise1.Models
         public virtual categoria categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<combo> combo { get; set; }
+
+
+        internal void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

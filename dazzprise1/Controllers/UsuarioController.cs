@@ -14,6 +14,13 @@ namespace dazzprise1.Controllers
     {
         // GET: Usuario
         [Authorize]
+        public ActionResult ListaU()
+        {
+            using (var db = new dazzpriseEntities1())
+            {
+                return View(db.usuario.ToList());
+            }
+        }
         public ActionResult Index()
         {
             using (var db = new dazzpriseEntities1())
@@ -168,7 +175,7 @@ namespace dazzprise1.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(userLogin.email, true);
                     Session["User"] = userLogin;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

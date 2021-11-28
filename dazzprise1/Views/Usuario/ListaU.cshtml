@@ -1,0 +1,61 @@
+﻿@model IEnumerable<dazzprise1.Models.usuario>
+
+@{
+    ViewBag.Title = "ListaU";
+}
+
+<h2>ListaU</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+          Nombre
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Documento
+        </th>
+        <th>
+          Contraseña
+        </th>
+        <th>
+          Telefono
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.documento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.contraseña)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_usuario)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

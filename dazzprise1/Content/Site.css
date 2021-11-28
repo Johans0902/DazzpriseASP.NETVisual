@@ -1,4 +1,4 @@
-﻿.* {
+﻿﻿.* {
     text-align: center;
 }
 
@@ -25,7 +25,6 @@ body {
     background-color: white;
     border-radius: 30px;
     overflow: hidden;
-
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -33,7 +32,6 @@ body {
 */
 .dl-horizontal dt {
     white-space: normal;
-
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -42,7 +40,12 @@ select,
 textarea {
     max-width: 280px;
 }
-.container.body-content {
+
+.table > thead > tr > th, .table > tbody > tr > th,
+.table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    text-align: center;
+}
+    .container.body-content {
     position: inherit;
     top: 1px;
     display: inline-block;
@@ -51,10 +54,12 @@ textarea {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     margin-top: 90px;
-    width: 300px
+  
+   
 }
+
 .form-control {
-   margin: 0;
+    margin: 0;
     position: relative;
     display: block;
     width: 250%;
@@ -69,14 +74,13 @@ textarea {
     border-radius: 20px;
     padding-inline-start: 2px;
     padding-block-end: 2px;
-  
-    
 }
+
 .form-horizontal {
-  
 }
+
 img {
-    display:block;
+    display: block;
     margin-left: auto;
     margin-right: auto;
 }
@@ -85,13 +89,13 @@ img {
 h2, .h2 {
 }
 
-.form-group{
-   
-
+.form-group {
 }
+
 .btn-default {
     margin-right: 75px;
 }
+
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -100,12 +104,13 @@ h2, .h2 {
     border-radius: 30px;
     overflow: hidden;
 }
+
 .navbar-inverse {
     background-color: aqua;
     border-color: aliceblue;
 }
 
- 
+
 
 .navbar {
     background-color: #61f3f3;

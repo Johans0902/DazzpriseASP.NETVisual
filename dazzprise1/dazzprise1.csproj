@@ -295,15 +295,16 @@
     <Content Include="Views\Cliente\Create.cshtml" />
     <Content Include="Views\Cliente\Details.cshtml" />
     <Content Include="Views\Cliente\Edit.cshtml" />
-    <Content Include="Views\Usuario\ListaUsuario.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
     <Content Include="Views\Producto\Edit.cshtml" />
     <Content Include="Views\Producto\Details.cshtml" />
     <Content Include="Views\Usuario\Home.cshtml" />
+    <Content Include="Views\Usuario\ListaU.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -35,13 +35,34 @@ namespace dazzprise1.Controllers
             if (!ModelState.IsValid)
                 return View();
 
+            /*      HttpPostedFileBase FileBase = Request.Files[0];
+
+      WebImage image = new WebImage(FileBase.InputStream);
+
+      ProductoController.imagen = image.GetBytes; */
+
+            /*   string fileName = Path.GetFileNameWithoutExtension(producto.imagen);
+               string extension = Path.GetExtension(producto.imagen);
+               fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+               producto.imagen = "~/Image/" + fileName;
+               fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+               producto.imagen.SaveAs(fileName);
+               using (producto db = new producto())
+               {
+                   db.imagen.(producto);
+                   db.SaveChanges();
+               }
+               ModelState.Clear();
+
+               return View(); */
+
             try
             {
 
                 using (var db = new dazzpriseEntities1())
                 {
 
-                    producto.nombre = UsuarioController.HashSHA1(producto.nombre);
+                    
                     db.producto.Add(producto);
                     _ = db.SaveChanges();
                     return RedirectToAction("index");
