@@ -1,0 +1,9 @@
+﻿@model IEnumerable<dazzprise1.Models.categoria>
+
+<select class="form-control" id="id_categoria" name="id_categoria">
+    @foreach (var item in Model)
+    {
+        <option value="@item.id">@item.nombre_categoria</option>
+    }
+</select>
+

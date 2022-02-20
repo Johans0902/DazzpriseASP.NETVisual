@@ -11,7 +11,8 @@ namespace dazzprise1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class producto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,14 +20,22 @@ namespace dazzprise1.Models
         {
             this.combo = new HashSet<combo>();
         }
-    
+
         public int id { get; set; }
         public Nullable<int> precio { get; set; }
+        [Required(ErrorMessage = "No puede ir vacio")]      
         public string descripcion { get; set; }
+        [Required]
         public string nombre { get; set; }
+        [Required]
         public string marca { get; set; }
+
+        [Required]
         public string modelo { get; set; }
+        [Required]
         public string imagen { get; set; }
+    
+        
         public Nullable<int> id_catalogo { get; set; }
         public Nullable<int> id_categoria { get; set; }
     
@@ -34,7 +43,7 @@ namespace dazzprise1.Models
         public virtual categoria categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<combo> combo { get; set; }
-
+        
 
         internal void SaveChanges()
         {
